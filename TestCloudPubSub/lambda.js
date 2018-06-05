@@ -3,18 +3,18 @@ let _auth = require('./Authorizer');
 let google = require('googleapis').google;
 const pubsub = google.pubsub('v1');
 exports.handler = function (event, context, callback) {
-	pubsub.projects.topics.subscriptions.list({
+	pubsub.projects.topics.publish({
 		topic: `projects/${process.env.GCLOUD_PROJECT_ID}/topics/topic`,
-		pageSize: 10
+		resource: {
+			messages: [{ data: `SGVsbG8gV29ybGQ=`, attributes: { "undefined": "" } }]
+		}
 	})
 		.then(response => {
-			console.log(response.data);  // successful response
+			console.log(response.data);           // successful response
 			/*
 			response.data = {
-				"subscriptions": [
-					"projects/<project>/subscriptions/<subscription-1>",
-					"projects/<project>/subscriptions/<subscription-2>",
-					...
+				"messageIds": [
+					"<numeric-message-id>"
 				]
 			}
 			*/
