@@ -1,1 +1,173 @@
-{"EDITOR_STATE":{"allProjectFiles":{"9c57d8a1-0ac2-44b6-9f5e-38a91e66578a":{"id":"9c57d8a1-0ac2-44b6-9f5e-38a91e66578a","parent":null,"name":"TestCloudPubSub","type":"DIRECTORY","isDirectory":true,"children":["365b2283-73c3-4c71-863b-f1fc418eb10a","78de777a-987c-4d5c-b997-127ad4b40ebd"],"isRemovable":false,"filePath":"TestCloudPubSub"},"365b2283-73c3-4c71-863b-f1fc418eb10a":{"id":"365b2283-73c3-4c71-863b-f1fc418eb10a","parent":"9c57d8a1-0ac2-44b6-9f5e-38a91e66578a","name":"lambda.js","type":"LAMBDA_FILE","isDirectory":false,"children":[],"isRemovable":true,"filePath":"TestCloudPubSub/lambda.js","code":"let AWS = require('aws-sdk');\nlet _auth = require('./Authorizer');\nlet google = require('googleapis').google;\nconst pubsub = google.pubsub('v1');\nexports.handler = function (event, context, callback) {\n\tpubsub.projects.topics.publish({\n\t\ttopic: `projects/${process.env.GCLOUD_PROJECT_ID}/topics/topic`,\n\t\tresource: {\n\t\t\tmessages: [{ data: `SGVsbG8gV29ybGQ=`, attributes: { \"undefined\": \"\" } }]\n\t\t}\n\t})\n\t\t.then(response => {\n\t\t\tconsole.log(response.data);           // successful response\n\t\t\t/*\n\t\t\tresponse.data = {\n\t\t\t\t\"messageIds\": [\n\t\t\t\t\t\"<numeric-message-id>\"\n\t\t\t\t]\n\t\t\t}\n\t\t\t*/\n\t\t})\n\t\t.catch(err => {\n\t\t\tconsole.log(err, err.stack); // an error occurred\n\t\t});\n\n\n\tcallback(null, 'Successfully executed');\n}","triggers":[{"resourceName":"apigusEast1GCPTestTestSendMessageany","config":{}}],"config":{"memory":128,"timeout":60,"runtime":"nodejs8.10"},"version":3,"syncVersion":3,"references":["78de777a-987c-4d5c-b997-127ad4b40ebd"]},"78de777a-987c-4d5c-b997-127ad4b40ebd":{"id":"78de777a-987c-4d5c-b997-127ad4b40ebd","parent":"9c57d8a1-0ac2-44b6-9f5e-38a91e66578a","name":"Authorizer.js","type":"JS_FILE","isDirectory":false,"children":[],"isRemovable":true,"filePath":"TestCloudPubSub/Authorizer.js","code":"const google = require(\"googleapis\").google;\n\nconst key = JSON.parse(process.env.GCLOUD_SERVICE_TOKEN);\nconst jwtClient = new google.auth.JWT({\n    email: key.client_email,\n    key: key.private_key,\n    scopes: [\"https://www.googleapis.com/auth/cloud-platform\"]\n});\ngoogle.options({auth: jwtClient, project: process.env.GCLOUD_PROJECT_ID});","triggers":[],"references":[]}},"rootNode":"9c57d8a1-0ac2-44b6-9f5e-38a91e66578a","openFiles":["365b2283-73c3-4c71-863b-f1fc418eb10a"],"currentFileId":"365b2283-73c3-4c71-863b-f1fc418eb10a","resources":{"apigusEast1GCPTestTestSendMessageany":{"name":"apigusEast1GCPTestTestSendMessageany","type":"API_GATEWAY","config":{"selectedRegion":"us-east-1","apiMode":1,"apiName":"GCPTest","apiId":"wfg6c6hle0","endpointType":"EDGE","rootResourceId":"hpll0sv7c5","existingResources":{"/TestCloudPubSub":"30k2mm","/test":"4tzilw","/":"hpll0sv7c5"},"resourceMode":0,"resourceName":"TestSendMessage","resourcePath":"/TestSendMessage","restMethod":"ANY","proxyIntegration":false,"enableCORS":false,"stageMode":0,"stageName":"test1"},"globallyEditable":true},"pubsubtopic":{"name":"pubsubtopic","type":"pubsub","config":{"mode":1,"topic":{"region":"us-east-1","name":"topic","subscriptions":[]}},"globallyEditable":false}},"envVariables":[{"lambdaId":"all","varKey":"SIGMA_AWS_ACC_ID","varValue":null,"shouldPersist":false,"editable":false},{"lambdaId":"all","varKey":"GCLOUD_SERVICE_TOKEN","varValue":null,"shouldPersist":false,"editable":true},{"lambdaId":"all","varKey":"GCLOUD_PROJECT_ID","varValue":null,"shouldPersist":false,"editable":true}],"packageJSON":{"dependencies":{"aws-sdk":{"name":"aws-sdk","version":"2.176.0","notRemovable":true},"googleapis":{"name":"googleapis","version":"29.0.0","notRemovable":false}}},"lambdaId":"365b2283-73c3-4c71-863b-f1fc418eb10a","additionalFiles":[]},"PROJECT_META":{"projectName":"TestCloudPubSub","projectDescription":"Send messages","projectVersion":"1.0.0","projectRegion":"us-east-1","repoName":"TestCloudPubSub","repoUrl":"https://github.com/Kumudikatest/TestCloudPubSub","lastSave":1528173618731}}
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "9c57d8a1-0ac2-44b6-9f5e-38a91e66578a": {
+        "id": "9c57d8a1-0ac2-44b6-9f5e-38a91e66578a",
+        "parent": null,
+        "name": "TestCloudPubSub",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "365b2283-73c3-4c71-863b-f1fc418eb10a",
+          "78de777a-987c-4d5c-b997-127ad4b40ebd"
+        ],
+        "isRemovable": false,
+        "filePath": "TestCloudPubSub"
+      },
+      "365b2283-73c3-4c71-863b-f1fc418eb10a": {
+        "id": "365b2283-73c3-4c71-863b-f1fc418eb10a",
+        "parent": "9c57d8a1-0ac2-44b6-9f5e-38a91e66578a",
+        "name": "lambda.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "TestCloudPubSub/lambda.js",
+        "code": "let AWS = require('aws-sdk');\nlet _auth = require('./Authorizer');\nlet google = require('googleapis').google;\nconst pubsub = google.pubsub('v1');\nexports.handler = function (event, context, callback) {\n\tpubsub.projects.topics.publish({\n\t\ttopic: `projects/${process.env.GCLOUD_PROJECT_ID}/topics/topic`,\n\t\tresource: {\n\t\t\tmessages: [{ data: `SGVsbG8gV29ybGQ=`, attributes: { \"undefined\": \"\" } }]\n\t\t}\n\t})\n\t\t.then(response => {\n\t\t\tconsole.log(response.data);           // successful response\n\t\t\t/*\n\t\t\tresponse.data = {\n\t\t\t\t\"messageIds\": [\n\t\t\t\t\t\"<numeric-message-id>\"\n\t\t\t\t]\n\t\t\t}\n\t\t\t*/\n\t\t})\n\t\t.catch(err => {\n\t\t\tconsole.log(err, err.stack); // an error occurred\n\t\t});\n\n\n\tcallback(null, 'Successfully executed');\n}",
+        "triggers": [
+          {
+            "resourceName": "apigusEast1GCPTestTestSendMessageany",
+            "config": {}
+          }
+        ],
+        "config": {
+          "memory": 128,
+          "timeout": 60,
+          "runtime": "nodejs8.10"
+        },
+        "testCases": {
+          "81e0e048-2798-4411-872d-d89d4eae5bfa": {
+            "id": "81e0e048-2798-4411-872d-d89d4eae5bfa",
+            "name": "Unnamed event",
+            "functionId": "365b2283-73c3-4c71-863b-f1fc418eb10a",
+            "event": "{\n    \"key1\": \"value1\",\n    \"key2\": \"value2\",\n    \"key3\": \"value3\"\n}"
+          }
+        }
+      },
+      "78de777a-987c-4d5c-b997-127ad4b40ebd": {
+        "id": "78de777a-987c-4d5c-b997-127ad4b40ebd",
+        "parent": "9c57d8a1-0ac2-44b6-9f5e-38a91e66578a",
+        "name": "Authorizer.js",
+        "type": "JS_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "TestCloudPubSub/Authorizer.js",
+        "code": "const google = require(\"googleapis\").google;\n\nconst key = JSON.parse(process.env.GCLOUD_SERVICE_TOKEN);\nconst jwtClient = new google.auth.JWT({\n    email: key.client_email,\n    key: key.private_key,\n    scopes: [\"https://www.googleapis.com/auth/cloud-platform\"]\n});\ngoogle.options({auth: jwtClient, project: process.env.GCLOUD_PROJECT_ID});",
+        "triggers": []
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "9c57d8a1-0ac2-44b6-9f5e-38a91e66578a",
+    "openFiles": [
+      "365b2283-73c3-4c71-863b-f1fc418eb10a"
+    ],
+    "currentFileId": "365b2283-73c3-4c71-863b-f1fc418eb10a",
+    "resources": {
+      "apigusEast1GCPTestTestSendMessageany": {
+        "name": "apigusEast1GCPTestTestSendMessageany",
+        "type": "API_GATEWAY",
+        "config": {
+          "selectedRegion": "us-east-1",
+          "apiMode": 1,
+          "apiName": "GCPTest",
+          "apiId": "wfg6c6hle0",
+          "endpointType": "EDGE",
+          "rootResourceId": "hpll0sv7c5",
+          "existingResources": {
+            "/TestCloudPubSub": "30k2mm",
+            "/test": "4tzilw",
+            "/": "hpll0sv7c5"
+          },
+          "resourceMode": 0,
+          "resourceName": "TestSendMessage",
+          "resourcePath": "/TestSendMessage",
+          "restMethod": "ANY",
+          "proxyIntegration": false,
+          "enableCORS": false,
+          "stageMode": 0,
+          "stageName": "test1"
+        },
+        "globallyEditable": true
+      },
+      "pubsubtopic": {
+        "name": "pubsubtopic",
+        "type": "pubsub",
+        "config": {
+          "mode": 1,
+          "topic": {
+            "region": "us-east-1",
+            "name": "topic",
+            "subscriptions": []
+          }
+        },
+        "globallyEditable": false
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": {}
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      },
+      {
+        "lambdaId": "all",
+        "varKey": "GCLOUD_SERVICE_TOKEN",
+        "varValue": "{\"type\": \"service_account\",\"project_id\": \"webhook-gcp\",\"private_key_id\": \"54772c60d4a75c81971b9d92f188e72303f05e37\",\"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC74at1R08BDPTj\\nUFPSap7aiWzKjstG3ZoB6zO6cFL18z+hOQbPOmPTyvVU1/RK73JaQAfX/cMfSea3\\nQKSvqK9eIsVpjstZCNXIvJ4HFZUwI4ipPyV7idPxaUHbx68wVZyhLQduVpyp2FS3\\no6To/uYCk9h84GhZuebwLMBflEAnEX1FpGuGifVxlq5Ao9mjHso8vOK7bcuBqEM2\\nQ8M4SZbkCvJvY8pGlySs29tAag/GrvMH2ZFWPoJimE4vsf98r5erPJiK4qYS7DJM\\n6+1zldqgNZlJFA/KZ5rRStk2jN4k4lMiQeU5qkOLLQl0ux1fnzK1WtUToWfoezEX\\nG6bbBWXnAgMBAAECggEAVP8QUsO6TZbfeLC/4wriJ6qRIYf9FWeuQxz1L2yeU29C\\nw3yphHl9bPS+DS6PcZEm0gZypffC3LZRnmiruF4fS/5+AbWccACLur793OWaMwd4\\nTVzoZ52gWPAN39BUBJFOhSn6WSPsxve7x8JMGi4qv1LEVyYsfx8Xh2Mvem32odVE\\nD7C/DzpMxhWs4nJ2jkjFjgfMJZSdtT5+13aF1+t1ykivyVgqjZ75/78X+Xw79Z35\\nSTsnMPWi38dklswkW8FwjPK74xYENOvtMQtLWFowQ4g1vQXITvlxLPRzy7mquaCd\\ns3WjCoItqrjLk3vhri2HQ+SenAizBU468mQG5rvNsQKBgQDuZOpo5qL8gI+Xw+Tk\\nbX1PSR4hfNhqUs4nAooPQfmkyN5ohMqJWPGa8w5rqANHC7jPh7CeV5H6X53glJ2q\\noqFKPVqKqz3DV30ozyMZDEa1f6YBPL+CJ4NcoMeWev2LHB9yfYEUCM+QX/9mncUE\\nignNZ9vxQYujmLoBgSWO8G0UEQKBgQDJwcK4ZfqZQCrqvmzyhIjKk47q64Ef+foU\\nI0YGH86crtQWF8rCqvdox2fEX1saIz7IFMGEZhqTO59g48wUtzEGAW+AbvOkiu6+\\no5zDtR1GhOuBgGC3Z0ouOIvI+ve3RQS64l229CJ0k/m8YM2H3EuLmgqgWFKslF7v\\nn+rHmsnydwKBgQCHWnDlYp4Ds5LT3nulXq0ZSTB8XwAZTi6SY5SzmQf/EbWFrm+4\\nj/GNwpbbdSd3PSaPXkFfheTyPTvMeVUTvwbIuhEgTp3gvVnow8Lvw9KZ1oIQjcdG\\nRN0GyJrJy8cNJsiMHsoc7+u502eVgdqM+zsZjvCICGkaV+q0U/lZMRUdoQKBgQCl\\npVaorNmd3ygdSTELwDLLF3E8gRSn20YuKHPCbXTmAUgRx4DqaRHuTeFtQdj7Ubqm\\n7RuhB2+EOGx3US/qRimSw7T3HqEdFBBGJvB7YgTiNBljXrKJgd1Oq5Bg92RQbPMg\\nOOA2aKStUBy3REca54yC1nspALsIBF0ZohNRxE1PqwKBgBc9O224FJgbRi/qyKWk\\ne4aXqNjzwF7d6+xtXLNBZUChIRqMj/De6f7zYk9wERH9G8Cw5Ci99ej67i+869sZ\\nEthJ1xXdrCG2C08lFlKmF2gKUx5aFwXfGpDerNWDa2iFCAkVe8AHFVCwla9MyavJ\\n1Hv/sc58CHsAbI1bCvD46fuw\\n-----END PRIVATE KEY-----\\n\",\"client_email\": \"kumudika@webhook-gcp.iam.gserviceaccount.com\",\"client_id\": \"108109080808180530197\",\"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\"token_uri\": \"https://oauth2.googleapis.com/token\",\"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\"client_x509_cert_url\": \"https://www.googleapis.com\"}",
+        "shouldPersist": true,
+        "displayOnly": false,
+        "editable": true
+      },
+      {
+        "lambdaId": "all",
+        "varKey": "GCLOUD_PROJECT_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": true
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "aws-sdk": {
+          "name": "aws-sdk",
+          "version": "2.176.0",
+          "notRemovable": true,
+          "language": "javascript",
+          "dev": true
+        },
+        "googleapis": {
+          "name": "googleapis",
+          "version": "29.0.0",
+          "notRemovable": false,
+          "language": "javascript"
+        }
+      }
+    },
+    "lambdaId": "365b2283-73c3-4c71-863b-f1fc418eb10a",
+    "additionalFiles": []
+  },
+  "PROJECT_META": {
+    "projectName": "TestCloudPubSub",
+    "projectDescription": "Send messages",
+    "projectVersion": "1.0.0",
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1558950650510
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "TestCloudPubSub",
+      "url": "https://github.com/Kumudikatest/TestCloudPubSub"
+    }
+  }
+}
